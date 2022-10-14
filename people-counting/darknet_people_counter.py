@@ -193,7 +193,7 @@ while True:
 			classids =[]
 			boxes, confidences, classids = generate_boxes_confidences_classids(outs, 0.5)
 			
-			#idxs = cv2.dnn.NMSBoxes(boxes, confidences, 0.5, 0.3)
+			idxs = cv2.dnn.NMSBoxes(boxes, confidences, 0.5, 0.3)
 			
 			if len(boxes)>0:
 				# for i in idxs.flatten():
@@ -318,7 +318,7 @@ while True:
 			writer.write(frame)
 		
 		# show the output frame
-                cv2.imshow("Frame", frame)
+                #cv2.imshow("Frame", frame)
 		imgrgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 	        plt.figure(1); plt.clf()
 		plt.imshow(imgrgb)
