@@ -22,7 +22,7 @@ import dlib
 import cv2
 
 # construct the argument parse and parse the arguments
-'''
+
 ap = argparse.ArgumentParser()
 ap.add_argument("-p", "--prototxt", required=True,
 	help="path to Caffe 'deploy' prototxt file")
@@ -42,12 +42,12 @@ ap = argparse.ArgumentParser()
 ap.add_argument("-o", "--output", type=str, default='out.mp4',
 	help="path to optional output video file")
 args = vars(ap.parse_args())
-
+'''
 
 model_caffe='/home/nms/people-counting/mobilenet_ssd/MobileNetSSD_deploy.caffemodel'
 model_proto='/home/nms/people-counting/mobilenet_ssd/MobileNetSSD_deploy.prototxt'
-#input='/home/ncair/Downloads/people-counting-opencv/videos/example_01.mp4'
-#input="rtsp://admin:transit@123@10.185.151.208/"
+input='/home/ncair/Downloads/people-counting-opencv/videos/example_01.mp4'
+input="rtsp://admin:transit@123@10.185.151.208/"
 input='/home/nms/people-counting/videos/example_01.mp4'
 confidence=0.5
 skip_frames=10
@@ -67,9 +67,9 @@ net = cv2.dnn.readNetFromCaffe(model_proto, model_caffe)
 # if a video path was not supplied, grab a reference to the webcam
 
 vs = cv2.VideoCapture(input)
-# vs.set(cv2.CAP_PROP_FPS, 10)
-#fps = vs.get(cv2.CAP_PROP_FPS)
-#print(fps)
+vs.set(cv2.CAP_PROP_FPS, 10)
+fps = vs.get(cv2.CAP_PROP_FPS)
+print(fps)
 # initialize the video writer (we'll instantiate later if need be)
 writer = None
 
@@ -121,9 +121,9 @@ while True:
 
 	# if we are supposed to be writing a video to disk, initialize
 	# the writer
-	# if args["output"] is not None and writer is None:
-	# 	fourcc = cv2.VideoWriter_fourcc(*"MJPG")
-	# 	writer = cv2.VideoWriter(args["output"], fourcc, 12, (W, H), True)
+	 if args["output"] is not None and writer is None:
+	 	fourcc = cv2.VideoWriter_fourcc(*"MJPG")
+	 	writer = cv2.VideoWriter(args["output"], fourcc, 12, (W, H), True)
 	# check to see if we should write the frame to disk
 	if writer is not None:
 		writer.write(frame)
@@ -296,12 +296,12 @@ if writer is not None:
 	writer.release()
 
 # if we are not using a video file, stop the camera video stream
-#if not args.get("input", False):
-#	vs.stop()
+if not args.get("input", False):
+	vs.stop()
 
 # otherwise, release the video file pointer
-#else:
-#	vs.release()
+else:
+	vs.release()
 vs.release()
 # close any open windows
 cv2.destroyAllWindows()
