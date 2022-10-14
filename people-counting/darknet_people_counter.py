@@ -318,7 +318,7 @@ while True:
 			writer.write(frame)
 		
 		# show the output frame
-         cv2.imshow("Frame", frame)
+                cv2.imshow("Frame", frame)
 		imgrgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 	        plt.figure(1); plt.clf()
 		plt.imshow(imgrgb)
