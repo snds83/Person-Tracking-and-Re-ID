@@ -36,28 +36,28 @@ shutil.rmtree('gallery', ignore_errors=True)
 os.mkdir('gallery')
 
 # construct the argument parse and parse the arguments
-# '''
+
 ap = argparse.ArgumentParser()
-# ap.add_argument("-p", "--prototxt", required=True,
-# 	help="path to Caffe 'deploy' prototxt file")
-# ap.add_argument("-m", "--model", required=True,
-# 	help="path to Caffe pre-trained model")
+ap.add_argument("-p", "--prototxt", required=True,
+ 	help="path to Caffe 'deploy' prototxt file")
+ap.add_argument("-m", "--model", required=True,
+ 	help="path to Caffe pre-trained model")
 ap.add_argument("-i", "--input", type=str, default="videos/sample1.mp4",
 	help="path to optional input video file")
 ap.add_argument("-o", "--output", type=str, 
 	help="path to optional output video file")
-# ap.add_argument("-c", "--confidence", type=float, default=0.4,
-# 	help="minimum probability to filter weak detections")
-# ap.add_argument("-s", "--skip-frames", type=int, default=30,
-# 	help="# of skip frames between detections")
+ap.add_argument("-c", "--confidence", type=float, default=0.4,
+ 	help="minimum probability to filter weak detections")
+ap.add_argument("-s", "--skip-frames", type=int, default=30,
+	help="# of skip frames between detections")
 args = vars(ap.parse_args())
-# '''
+
 model_cfg=b'yolo/yolov3-tiny.cfg'
 model_wgt=b'yolo/yolov3-tiny.weights'
-#model_cfg='/home/ncair/Downloads/people-counting-opencv/yolov3-coco/frozen_tiny_yolo_v3.xml'
-#model_wgt='/home/ncair/Downloads/people-counting-opencv/yolov3-coco/frozen_tiny_yolo_v3.bin'
+model_cfg='/home/ncair/Downloads/people-counting-opencv/yolov3-coco/frozen_tiny_yolo_v3.xml'
+model_wgt='/home/ncair/Downloads/people-counting-opencv/yolov3-coco/frozen_tiny_yolo_v3.bin'
 
-#input='/home/ncair/Desktop/Counter/people.mp4'
+input='/home/ncair/Desktop/Counter/people.mp4'
 input="rtsp://admin:transit@123@10.185.151.213/"
 input="videos/sample1.mp4"
 input=args["input"]
@@ -110,10 +110,10 @@ def generate_boxes_confidences_classids(outs, tconf):
     confidences = []
     classids = []
     for detection in outs:
-        # print(detection)
+        print(detection)
         confidence = detection[1]
         classid = detection[0]
-        # confidence = scores[classid]
+        confidence = scores[classid]
         if confidence > tconf:
             if classid != b'person':
                continue
@@ -144,8 +144,8 @@ while True:
 
 	if grab == True:
 		frame = frame #if args.get("input", False) else frame
-		#frame = frame[100:500, 250:704]
-		#print(frame.shape[1])
+		frame = frame[100:500, 250:704]
+		print(frame.shape[1])
 		# if we are viewing a video and we did not grab a frame then we
 		# have reached the end of the video
 
@@ -274,9 +274,9 @@ while True:
 					# line, count the object
 					if direction < 0 and centroid[1] < H // 2:
 						totalUp += 1
-						#data="http://18.191.211.159/counter.php?Store_Id="+str(2)+"&upcount="+str(totalUp)+"&downcount="+str(totalDown)
-						#r = requests.get(url = data)
-						#print(r)
+						data="http://18.191.211.159/counter.php?Store_Id="+str(2)+"&upcount="+str(totalUp)+"&downcount="+str(totalDown)
+						r = requests.get(url = data)
+						print(r)
 						to.counted = True
 
 					# if the direction is positive (indicating the object
@@ -284,9 +284,9 @@ while True:
 					# center line, count the object
 					elif direction > 0 and centroid[1] > H // 2:
 							totalDown += 1
-							#data="http://18.191.211.159/counter.php?Store_Id="+str(2)+"&upcount="+str(totalUp)+"&downcount="+str(totalDown)
-							#r = requests.get(url = data)
-							#print(r)
+							data="http://18.191.211.159/counter.php?Store_Id="+str(2)+"&upcount="+str(totalUp)+"&downcount="+str(totalDown)
+							r = requests.get(url = data)
+							print(r)
 							to.counted = True
 
 			# store the trackable object in our dictionary
@@ -318,17 +318,17 @@ while True:
 			writer.write(frame)
 		
 		# show the output frame
-        # cv2.imshow("Frame", frame)
-		#imgrgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-		#plt.figure(1); plt.clf()
-		#plt.imshow(imgrgb)
-		#plt.show()
-		#plt.pause(1)
-		# key = cv2.waitKey(1) & 0xFF
+         cv2.imshow("Frame", frame)
+		imgrgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+	        plt.figure(1); plt.clf()
+		plt.imshow(imgrgb)
+		plt.show()
+		plt.pause(1)
+		 key = cv2.waitKey(1) & 0xFF
 
-		# if the `q` key was pressed, break from the loop
-		#if key == ord("q"):
-		#	break
+		 if the `q` key was pressed, break from the loop
+		if key == ord("q"):
+			break
 
 		# increment the total number of frames processed thus far and
 		# then update the FPS counter
@@ -341,4 +341,4 @@ print("[INFO] elapsed time: {:.2f}".format(fps.elapsed()))
 print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
 
 vs.release()
-# cv2.destroyAllWindows()
+cv2.destroyAllWindows()
