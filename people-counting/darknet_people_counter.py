@@ -324,11 +324,11 @@ while True:
 		plt.imshow(imgrgb)
 		plt.show()
 		plt.pause(1)
-		 key = cv2.waitKey(1) & 0xFF
+		# key = cv2.waitKey(1) & 0xFF
 
-		 if the `q` key was pressed, break from the loop
-		if key == ord("q"):
-			break
+		 #if the `q` key was pressed, break from the loop
+		#if key == ord("q"):
+		#	break
 
 		# increment the total number of frames processed thus far and
 		# then update the FPS counter
@@ -341,4 +341,4 @@ print("[INFO] elapsed time: {:.2f}".format(fps.elapsed()))
 print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
 
 vs.release()
-cv2.destroyAllWindows()
+#cv2.destroyAllWindows()
